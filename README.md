@@ -13,19 +13,15 @@ The pipeline includes quality control, trimming, alignment to the faba bean geno
 ## 📂 Project Structure
 
 .
-├── fastqc_output/ # Quality reports
-├── Trimmomatic_all_files/ # Trimmomatic output
-├── alignment/script/ # HISAT2 alignment script and SAM --> BAM conversion
-├── indexing/indexing_array/ # SAMtools indexing script
-├── annotation/ # HTSeq-count script 
-├── PCA/ # PCA script and plots
-├── DEG_analysis/ # DESeq2 scripts and volcano plots
-├── GO_analysis/ # GO analysis script and upregulated/downregulated pathway figures
-└── README.md
-
-yaml
-Copy
-Edit
+├── fastqc_output/ # Quality reports from FastQC
+├── Trimmomatic_all_files/ # Cleaned reads from Trimmomatic
+├── alignment/script/ # HISAT2 alignment + SAM to BAM conversion
+├── indexing/indexing_array/ # SAMtools indexing script and outputs
+├── annotation/ # HTSeq-count script and gene count files
+├── PCA/ # PCA R scripts and plots
+├── DEG_analysis/ # DESeq2 scripts, DEG lists, and volcano plots
+├── GO_analysis/ # GO enrichment scripts and pathway figures
+└── README.md # This file
 
 ---
 
