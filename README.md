@@ -12,6 +12,7 @@ The pipeline includes quality control, trimming, alignment to the faba bean geno
 
 ## 📂 Project Structure
 
+```text
 .
 ├── fastqc_output/ # Quality reports from FastQC
 ├── Trimmomatic_all_files/ # Cleaned reads from Trimmomatic
@@ -22,6 +23,7 @@ The pipeline includes quality control, trimming, alignment to the faba bean geno
 ├── DEG_analysis/ # DESeq2 scripts, DEG lists, and volcano plots
 ├── GO_analysis/ # GO enrichment scripts and pathway figures
 └── README.md # This file
+```
 
 ---
 
