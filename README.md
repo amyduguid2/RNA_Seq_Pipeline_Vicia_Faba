@@ -82,12 +82,16 @@ The pipeline includes quality control, trimming, alignment to the faba bean geno
 
 - Tool: DESeq2 or prcomp() in R
 - Visualizes variation between genotypes and conditions
+- Output:
+![PCA plot showing sample clustering](PCA/pca_plot.png)
 
 ### 7. Differential Expression — DESeq2
 
 - Tool: DESeq2
 - Design formula: ~ genotype + condition + genotype:condition
-- Output: DEGs and volcano plots
+- Output: DEG Lists and volcano plots
+- Volcano Plot for HCvsHA:
+![Volcano Plot for HCvsHA](DEG_analysis/volcano_plot_HCvsHA.png)
 
 ---
 
@@ -101,6 +105,9 @@ The pipeline includes quality control, trimming, alignment to the faba bean geno
     - Tool: GeneOntology.org
     - Input: up/downregulated gene lists
     - Output: enriched GO terms and pathway figures
+
+- GO Analysis Enriched Pathways:
+![GO Analysis HCvsHA](GO_analysis/HCvsHA/GO_dotplot_HCvsHA.png)
 
 - 📎 Dependencies
     - FastQC
