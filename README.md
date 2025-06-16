@@ -91,6 +91,8 @@ The pipeline includes quality control, trimming, alignment to the faba bean geno
 - Output:
 ![PCA plot showing sample clustering](PCA/pca_plot.png)
 
+--- 
+
 ### 7. Differential Expression — DESeq2
 
 - Tool: DESeq2
@@ -114,6 +116,8 @@ The pipeline includes quality control, trimming, alignment to the faba bean geno
 
 - GO Analysis Enriched Pathways for HCvsHA condition:
 ![GO Analysis HCvsHA](GO_analysis/HCvsHA/GO_dotplot_HCvsHA.png)
+
+--- 
 
 - 📎 Dependencies
     - FastQC
