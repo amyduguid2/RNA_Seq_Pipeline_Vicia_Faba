@@ -26,7 +26,7 @@ for R1 in "$FASTQ_DIR"/*_R1_001.fastq.gz; do
 
         # Define output file names
         PAIRED_R1_OUT="$OUTPUT_DIR/${SAMPLE_NAME}_paired_R1.fastq.gz"
-        UNAPIRD_R1_OUT="$OUTPUT_DIR/${SAMPLE_NAME}_unpaired_R1.fastq.gz"
+        UNPAIRED_R1_OUT="$OUTPUT_DIR/${SAMPLE_NAME}_unpaired_R1.fastq.gz"
         PAIRED_R2_OUT="$OUTPUT_DIR/${SAMPLE_NAME}_paired_R2.fastq.gz"
         UNAPIRED_R"_OUT="$OUTPUT_DIR/${SAMPLE_NAME}_unpaired_R2.fastq.gz"
 
@@ -35,7 +35,7 @@ for R1 in "$FASTQ_DIR"/*_R1_001.fastq.gz; do
             -threads 4 \
             "$R1" "$R2" \
             "$PAIRED_R1_OUT" "$UNPAIRED_R1_OUT" \
-            "$PAIRED_R2_OUT" "$UNAPIRED_R2_OUT" \
+            "$PAIRED_R2_OUT" "$UNPAIRED_R2_OUT" \
             ILLUMINACLIP:"$ADAPTERS":2:30:10 \
             SLIDINGWINDOW:4:20 MINLEN:75
     else 

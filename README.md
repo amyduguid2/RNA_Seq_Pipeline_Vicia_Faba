@@ -14,11 +14,11 @@ The pipeline includes quality control, trimming, alignment to the faba bean geno
 
 ```text
 .
-├── fastqc_output/ # Quality reports from FastQC
-├── Trimmomatic_all_files/ # Cleaned reads from Trimmomatic
-├── alignment/script/ # HISAT2 alignment + SAM to BAM conversion
-├── indexing/indexing_array/ # SAMtools indexing script and outputs
-├── annotation/ # HTSeq-count script and gene count files
+├── fastqc_output/ # FastQC Script
+├── Trimmomatic_all_files/ # Trimmomatic Script and Script to combine fastqc files across lanes
+├── alignment/script/ # HISAT2 alignment + SAM to BAM conversion scripts
+├── indexing/indexing_array/ # SAMtools indexing script
+├── annotation/ # HTSeq-count script
 ├── PCA/ # PCA R scripts and plots
 ├── DEG_analysis/ # DESeq2 scripts, DEG lists, and volcano plots
 ├── GO_analysis/ # GO enrichment scripts and pathway figures
@@ -32,9 +32,13 @@ The pipeline includes quality control, trimming, alignment to the faba bean geno
 - **Genotypes**: Cold Tolerant (TOL) and Cold Susceptible (SUS)
 - **Conditions**:
   - Control (C)
+  - Acclimated (A)
   - Control + Freezing (F)
   - Cold Acclimated + Freezing (AF)
-- **Groups**: 2 genotypes × 3 conditions = 6 groups
+- **Groups**: 2 genotypes × 4 conditions = 8 comparisons
+- **Replicates**: 
+    - 3 technical replicates per sample = 24 total samples
+    - Paired-end Illumina Sequencing Reads across 4 lanes = 192 fastq files total
 
 ---
 
@@ -53,6 +57,7 @@ The pipeline includes quality control, trimming, alignment to the faba bean geno
 - Tool: [`Trimmomatic`](http://www.usadellab.org/cms/?page=trimmomatic)
 - Removes Illumina adapters, low-quality regions, and short reads
 - Output: Paired/unpaired cleaned FASTQ files
+- Combine paired output files across all four lanes
 
 --- 
 
@@ -88,7 +93,7 @@ The pipeline includes quality control, trimming, alignment to the faba bean geno
 ### 7. Differential Expression — DESeq2
 
 - Tool: DESeq2
-- Design formula: ~ genotype + condition + genotype:condition
+- Design formula: ~ condition + replicate 
 - Output: DEG Lists and volcano plots
 - Volcano Plot for HCvsHA:
 ![Volcano Plot for HCvsHA](DEG_analysis/volcano_plot_HCvsHA.png)
@@ -106,7 +111,7 @@ The pipeline includes quality control, trimming, alignment to the faba bean geno
     - Input: up/downregulated gene lists
     - Output: enriched GO terms and pathway figures
 
-- GO Analysis Enriched Pathways:
+- GO Analysis Enriched Pathways for HCvsHA condition:
 ![GO Analysis HCvsHA](GO_analysis/HCvsHA/GO_dotplot_HCvsHA.png)
 
 - 📎 Dependencies
