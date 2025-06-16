@@ -1,0 +1,135 @@
+---
+title: "GO_Analysis_Group6"
+output: html_document
+date: "2025-04-03"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+rm(list = ls())
+```
+
+```{r}
+#load Hiverna Freezing vs Hiverna Acclimated Freezing Ranked List
+WAvsHA <- read.csv("/rds/projects/f/foyerch-rnaseq-data-faba-bean/DEG_analysis/rankedlist_WAvsHA.csv", header = TRUE)
+```
+
+```{r}
+library(dplyr)
+library(tidyverse)
+```
+
+```{r}
+WAvsHA_upregulated <- WAvsHA %>% filter(WAvsHA$log2FoldChange > 1)
+```
+
+```{r}
+WAvsHA_downregulated <- WAvsHA %>% filter(WAvsHA$log2FoldChange < -1)
+```
+
+```{r}
+write.table(WAvsHA_upregulated$gene, file = "upregulated_list_WAvsHA.txt", 
+            quote = FALSE, row.names = FALSE, col.names = FALSE)
+```
+
+```{r}
+write.table(WAvsHA_downregulated$gene, file = "downregulated_list_WAvsHA.txt", 
+            quote = FALSE, row.names = FALSE, col.names = FALSE)
+```
+
+```{r}
+upregulated_orthologs <- read.csv("/rds/projects/f/foyerch-rnaseq-data-faba-bean/GO_analysis/WAvsHA/mart_export.txt")
+```
+
+```{r}
+write.table(upregulated_orthologs$Glycine.max.gene.stable.ID, file = "/rds/projects/f/foyerch-rnaseq-data-faba-bean/GO_analysis/WAvsHA/upregulated_orthologs_id.txt", 
+            quote = FALSE, row.names = FALSE, col.names = FALSE)
+```
+
+```{r}
+GO_upregulated <- read.table("/rds/projects/f/foyerch-rnaseq-data-faba-bean/GO_analysis/WAvsHA/analysis.txt", header = TRUE, sep = "\t")
+```
+
+```{r}
+top_go_upregulated <- GO_upregulated %>%
+  filter(upload_1..fold.Enrichment. > 3) %>%
+  filter(upload_1..FDR. < 0.0001) %>%
+  arrange(desc(upload_1..fold.Enrichment.)) %>%
+  slice_head(n=15)
+```
+
+```{r}
+downregulated_orthologs <- read.csv("/rds/projects/f/foyerch-rnaseq-data-faba-bean/GO_analysis/WAvsHA/mart_export_down.txt")
+```
+
+```{r}
+write.table(downregulated_orthologs$Glycine.max.gene.stable.ID, file = "/rds/projects/f/foyerch-rnaseq-data-faba-bean/GO_analysis/WAvsHA/downregulated_orthologs_id.txt", 
+            quote = FALSE, row.names = FALSE, col.names = FALSE)
+```
+
+```{r}
+GO_downregulated <- read.table("/rds/projects/f/foyerch-rnaseq-data-faba-bean/GO_analysis/WAvsHA/analysis_down.txt", header = TRUE, sep = "\t")
+```
+
+```{r}
+top_go_downregulated <- GO_downregulated %>%
+  filter(upload_1..fold.Enrichment. > 3) %>%
+  filter(upload_1..FDR. < 0.0001) %>%
+  arrange(desc(upload_1..fold.Enrichment.)) %>%
+  slice_head(n =10) # take top 15
+```
+
+```{r}
+top_go_up_df <- data.frame("Term" = top_go_upregulated$GO.biological.process.complete, "FDR" = top_go_upregulated$upload_1..FDR. , "Direction" = "Upregulated", "Enrichment" = top_go_upregulated$upload_1..fold.Enrichment.)
+
+top_go_down_df <- data.frame("Term" = top_go_downregulated$GO.biological.process.complete, "FDR" = top_go_downregulated$upload_1..FDR. , "Direction" = "Downregulated", "Enrichment" = top_go_downregulated$upload_1..fold.Enrichment.)
+
+top_go <- rbind(top_go_up_df, top_go_down_df)
+```
+
+
+
+```{r}
+top_go_up_df <- top_go_up_df %>% mutate(Enrichment = as.numeric(Enrichment))
+top_go_down_df <- top_go_down_df %>% mutate(Enrichment = as.numeric(Enrichment))
+top_go <- top_go %>% mutate(Enrichment = as.numeric(Enrichment))
+```
+
+```{r}
+top_go <- top_go %>% 
+  arrange((FDR)) %>%
+  mutate(Term = gsub(" \\(GO:[0-9]+\\)$", "", top_go$Term))
+```
+
+```{r}
+top_go_up_df <- top_go_up_df %>% arrange((FDR))
+```
+
+```{r}
+top_go_down_df <- top_go_down_df %>% arrange((FDR))
+```
+
+```{r}
+   options(bitmapType='cairo')
+```
+
+```{r}
+top_go$Term <- factor(top_go$Term, levels = rev(top_go$Term))
+
+ggplot(top_go, aes(x = -log10(FDR), y = Term, color = Direction, size = Enrichment)) +
+  geom_point() +
+  scale_size(range = c(1,5)) +
+  scale_color_manual(values = c("Upregulated" = "cyan3", "Downregulated" = "darksalmon")) +
+  labs(
+    title = "Top GO Biological Processes WAvsHA",
+    x = expression(-log[10]~"(FDR-adjusted p-value)"),
+    y = NULL
+  ) +
+  scale_y_discrete(labels = function(x) str_wrap(x, width = 60)) +
+  theme_minimal(base_size = 12)
+
+ggsave("GO_dotplot_WAvsHA.png", width = 8, height = 5, dpi = 300)
+```
