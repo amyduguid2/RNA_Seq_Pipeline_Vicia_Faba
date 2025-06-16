@@ -1,12 +1,13 @@
 # RNA-seq Analysis of Faba Bean (Vicia faba) Cold Response
 
-This repository contains scripts and documentation for RNA-seq analysis of **two Vicia faba genotypes**—**cold tolerant (TOL)** and **cold susceptible (SUS)**—subjected to **three experimental conditions**:
+This repository contains scripts and documentation for RNA-seq analysis of **two Vicia faba genotypes**—**cold tolerant Hiverna(H))** and **cold susceptible WIzard (W)**—subjected to **four experimental conditions**:
 
 - **C** – Control
+- **A** - Acclimated
 - **F** – Control + Freezing
 - **AF** – Cold Acclimated + Freezing
 
-The pipeline includes quality control, trimming, alignment to the faba bean genome, quantification, differential expression analysis, PCA, and GO enrichment using soybean orthologs.
+The pipeline includes quality control, trimming, alignment to the faba bean genome, quantification, differential expression analysis, PCA, and GO pathway enrichment using soybean orthologs.
 
 ---
 
@@ -29,7 +30,7 @@ The pipeline includes quality control, trimming, alignment to the faba bean geno
 
 ## 🧪 Experimental Design
 
-- **Genotypes**: Cold Tolerant (TOL) and Cold Susceptible (SUS)
+- **Genotypes**: Cold Tolerant Hiverna (H) and Cold Susceptible Wizard (W)
 - **Conditions**:
   - Control (C)
   - Acclimated (A)
@@ -120,13 +121,13 @@ The pipeline includes quality control, trimming, alignment to the faba bean geno
     - HISAT2
     - SAMtools
     - HTSeq
-    - R (DESeq2, ggplot2, biomaRt, pheatmap)
-    - Internet access or scripts for BioMart/GO.org
+    - R (DESeq2, ggplot2)
+    - Internet access or scripts for Ensembl Plant BioMart/gene_ontology.org
 
 - 🧠 Key Findings
     - PCA showed clear separation by genotype and condition.
-    - Cold tolerant genotypes had unique transcriptomic signatures under freezing.
-    - GO analysis highlighted pathways related to cold response, oxidative stress, and membrane stabilization.
+    - Cold tolerant genotypes had unique transcriptomic signatures under acclimation and freezing conditions.
+    - GO analysis highlighted pathways related to cold response, including reactive oxygen species (ROS) and hormone-related pathways (abscicic, salycilic and jasmonic acid). 
 
 - ✍️ Author
     - This pipeline was developed for an MSc Bioinformatics group project on identifying transcriptomic cold tolerance mechanisms in Vicia faba.
