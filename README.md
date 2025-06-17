@@ -11,18 +11,32 @@ The pipeline includes quality control, trimming, alignment to the faba bean geno
 
 ---
 
+## 💻 HPC and Array Jobs
+This project involved RNA-seq analysis of the faba bean genome (~13 Gb), a large and complex plant genome. Due to the computational demands of handling such a large dataset, the analysis was conducted on a High-Performance Computing (HPC) cluster using SLURM workload management.
+
+To enable scalable and efficient processing, SLURM array jobs were used to efficiently parallelize the following tasks:
+- Indexing the genome
+- Aligning reads to the reference genome
+- Functional Annotation to produce a counts matrix
+
+This setup allowed for significant reductions in runtime and enabled the project to be reproducible and efficient at scale.
+
+Subsequent steps — differential expression analysis (DEA) and gene ontology (GO) enrichment — were conducted using R Markdown for transparency and reproducibility.
+
+All SLURM job scripts and R Markdown files are organized within the corresponding task folders in the pipeline structure (e.g., 01_alignment/, 02_annotation/, etc.).
+
 ## 📂 Project Structure
 
 ```text
 .
-├── fastqc_output/ # FastQC Script
-├── Trimmomatic_all_files/ # Trimmomatic Script and Script to combine fastqc files across lanes
-├── alignment/script/ # HISAT2 alignment + SAM to BAM conversion scripts
-├── indexing/indexing_array/ # SAMtools indexing script
-├── annotation/ # HTSeq-count script
-├── PCA/ # PCA R scripts and plots
-├── DEG_analysis/ # DESeq2 scripts, DEG lists, and volcano plots
-├── GO_analysis/ # GO enrichment scripts and pathway figures
+├── 01_fastqc/ # FastQC Script
+├── 02_trimmomatic/ # Trimmomatic Script and Script to combine fastqc files across lanes
+├── 03_alignment/script/ # HISAT2 alignment + SAM to BAM conversion scripts
+├── 04_indexing/indexing_array/ # SAMtools indexing script
+├── 05_annotation/ # HTSeq-count script
+├── 06_PCA/ # PCA R scripts and plots
+├── 07_DEG_analysis/ # DESeq2 scripts, DEG lists, and volcano plots
+├── 08_GO_analysis/ # GO enrichment scripts and pathway figures
 └── README.md # This file
 ```
 
