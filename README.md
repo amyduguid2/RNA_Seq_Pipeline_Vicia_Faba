@@ -103,7 +103,7 @@ All SLURM job scripts and R Markdown files are organized within the correspondin
 - Tool: DESeq2 or prcomp() in R
 - Visualizes variation between genotypes and conditions
 - Output:
-![PCA plot showing sample clustering](PCA/pca_plot.png)
+![PCA plot showing sample clustering](06_PCA/pca_plot.png)
 
 --- 
 
@@ -113,7 +113,7 @@ All SLURM job scripts and R Markdown files are organized within the correspondin
 - Design formula: ~ condition + replicate 
 - Output: DEG Lists and volcano plots
 - Volcano Plot for HCvsHA:
-![Volcano Plot for HCvsHA](DEG_analysis/volcano_plot_HCvsHA.png)
+![Volcano Plot for HCvsHA](07_DEG_analysis/volcano_plot_HCvsHA.png)
 
 ---
 
@@ -129,7 +129,7 @@ All SLURM job scripts and R Markdown files are organized within the correspondin
     - Output: enriched GO terms and pathway figures
 
 - GO Analysis Enriched Pathways for HCvsHA condition:
-![GO Analysis HCvsHA](GO_analysis/HCvsHA/GO_dotplot_HCvsHA.png)
+![GO Analysis HCvsHA](08_GO_analysis/HCvsHA/GO_dotplot_HCvsHA.png)
 
 --- 
 
